@@ -18,6 +18,28 @@
             
     </head>
     <body>
-        <h1>Hello World!</h1>
+        <div class="container">
+            <div class="row">
+                <div class="col m6 offset-m3">
+                    <div class="card">
+                        <div class="card-content">
+                            <h3>Register here !!</h3>
+                            <div class="form center-align">
+                                 <!--//creating form-->
+                                <form action="Register" method="post">
+                                    <input type="text" name="user_name" placeholder="Enter user name"/>
+                                    <input type="password" name="user_password" placeholder="Enter user password"/>
+                                    <input type="email" name="user_email" placeholder="Enter user email"/>
+                                    <button type="submit" class="btn red">Submit</button>
+                                </form>
+                            </div>
+                            <div class="loader">
+                               
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </body>
 </html>
