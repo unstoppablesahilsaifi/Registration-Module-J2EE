@@ -32,25 +32,19 @@ public class Register extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try ( PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet Register</title>");            
-            out.println("</head>");
-            out.println("<body>");
+        
             
             //Gettting all thr information incomig from the request(from html page).
             String name=request.getParameter("user_name");
             String email=request.getParameter("user_email");
             String password=request.getParameter("user_password");
             
-            out.println(name);
-            out.println(email);
-            out.println(password);
+           
             
             //Need to Create DB connection using JDBC(because whatever data is coming that should be store in Database).
            
             try {
+                Thread.sleep(2000);
                  //1. Load the Driver
                 Class.forName("com.mysql.cj.jdbc.Driver");
                 //2. Create connection
@@ -64,18 +58,17 @@ public class Register extends HttpServlet {
                 pstmt.setString(3,password);
                 
                 pstmt.executeUpdate();
-                out.println("<h1>Done....</h1>");
+                out.println("Done");
                 
                 
             }catch(Exception e){
                 e.printStackTrace();
-                 out.println("Error Occured....");
+                 out.println("Error");
             }
             	
             
             
-            out.println("</body>");
-            out.println("</html>");
+           
         }
     }
 

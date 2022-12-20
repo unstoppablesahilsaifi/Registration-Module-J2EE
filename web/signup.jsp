@@ -24,13 +24,14 @@
                     <div class="card">
                         <div class="card-content">
                             <h3 style="margin-top:10px;" class="center-align">Register here !!</h3>
+                            <h5 id="msg"class="center-align"></h5>
                             <div class="form center-align">
                                 <!--//creating form-->
-                                <form action="Register" method="post">
+                                <form action="Register" method="post" id="myform">
                                     <input type="text" name="user_name" placeholder="Enter user name"/>
                                     <input type="password" name="user_password" placeholder="Enter user password"/>
                                     <input type="email" name="user_email" placeholder="Enter user email"/>
-                                    <button type="submit" class="btn red">Submit</button>
+                                    <button type="submit" class="btn blue">Submit</button>
                                 </form>
                             </div>
 
@@ -95,6 +96,39 @@
         <script>
             $(document).ready(function () {
                 console.log("page is ready....")
+                $("#myform").on('submit',function(event){
+                    event.preventDefault();
+                    var f=$(this).serialize();
+                    console.log(f);
+                    $(".loader").show();
+                    $(".form").hide();
+                    $.ajax({
+                        url:"Register",
+                        data:f,
+                        type:'POST',
+                        success:function(data,textStatus,jqXHR){
+                           console.log(data);
+                           console.log("Success.......");
+                             $(".loader").hide();
+                             $(".form").show();
+                             if(data.trim() === 'Done'){
+                                 $('#msg').html("Successfully Registered !!");
+                                 $('#msg').addClass('green-text')
+                             }else{
+                               $('#msg').html("Something went wrong... !!"); 
+                               $('#msg').addClass('red-text')
+                             }
+                        },
+                        error:function(jqXHR,textStatus,errorThrown){
+                            console.log(data);
+                           console.log("Error.......");  
+                           $(".loader").hide();
+                             $(".form").show();
+                              $('#msg').html("Something went wrong... !!"); 
+                                $('#msg').addClass('red-text')
+                        }
+                    })
+                })
             })
         </script>
     </body>
