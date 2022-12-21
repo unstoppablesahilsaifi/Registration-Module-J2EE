@@ -126,7 +126,7 @@
                                 $('#msg').html("Successfully Registered !!");
                                 $('#msg').addClass('green-text')
                             } else {
-                                $('#msg').html("Something went wrong... !!");
+                                $('#msg').html("Something went wrong.... !!");
                                 $('#msg').addClass('red-text')
                             }
                         },

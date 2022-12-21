@@ -4,7 +4,10 @@
  */
 package com.user;
 
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -35,47 +38,50 @@ public class Register extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try ( PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
-        
-            
+
             //Gettting all thr information incomig from the request(from html page).
-            String name=request.getParameter("user_name");
-            String email=request.getParameter("user_email");
-            String password=request.getParameter("user_password");
+            String name = request.getParameter("user_name");
+            String email = request.getParameter("user_email");
+            String password = request.getParameter("user_password");
             //For fetching image
-           Part part=request.getPart("image");
-           String filename=part.getSubmittedFileName();
-           out.println(filename);
-            
-           
-            
+            Part part = request.getPart("image");
+            String filename = part.getSubmittedFileName();
+            //  out.println(filename);
+
             //Need to Create DB connection using JDBC(because whatever data is coming that should be store in Database).
-           
             try {
                 Thread.sleep(2000);
-                 //1. Load the Driver
+                //1. Load the Driver
                 Class.forName("com.mysql.cj.jdbc.Driver");
                 //2. Create connection
-                Connection con=DriverManager.getConnection("jdbc:mysql://localhost:3306/registration_module","root","root");
+                Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/registration_module", "root", "root");
                 //3. Query for inserting the data
-                String q="insert into user(name,email,password) values(?,?,?)";
-                PreparedStatement pstmt=con.prepareStatement(q);
-                
-                pstmt.setString(1,name);
-                pstmt.setString(2,email);
-                pstmt.setString(3,password);
-                
-               // pstmt.executeUpdate();
+                String q = "insert into user(name,email,password,Imagename) values(?,?,?,?)";
+                PreparedStatement pstmt = con.prepareStatement(q);
+
+                pstmt.setString(1, name);
+                pstmt.setString(2, email);
+                pstmt.setString(3, password);
+                pstmt.setString(4, filename);
+
+                pstmt.executeUpdate();
                 out.println("Done");
-                
-                
-            }catch(Exception e){
+
+                // From here the filename has been uploaded to DB but mow  we have to uplaod the  file too in project.
+                InputStream is = part.getInputStream();
+                byte []data = new byte[is.available()];
+                is.read(data);
+                String path = request.getRealPath("/") + "img" + File.separator+filename;
+                FileOutputStream fos = new FileOutputStream(path);
+                fos.write(data);
+                fos.close();
+              //  out.println("done");
+
+            } catch (Exception e) {
                 e.printStackTrace();
-                 out.println("Error");
+                out.println("Error");
             }
-            	
-            
-            
-           
+
         }
     }
 
