@@ -11,11 +11,14 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.sql.*;
+import javax.servlet.annotation.MultipartConfig;
+import javax.servlet.http.Part;
 
 /**
  *
  * @author saifi
  */
+@MultipartConfig
 public class Register extends HttpServlet {
 
     /**
@@ -38,6 +41,10 @@ public class Register extends HttpServlet {
             String name=request.getParameter("user_name");
             String email=request.getParameter("user_email");
             String password=request.getParameter("user_password");
+            //For fetching image
+           Part part=request.getPart("image");
+           String filename=part.getSubmittedFileName();
+           out.println(filename);
             
            
             
@@ -57,7 +64,7 @@ public class Register extends HttpServlet {
                 pstmt.setString(2,email);
                 pstmt.setString(3,password);
                 
-                pstmt.executeUpdate();
+               // pstmt.executeUpdate();
                 out.println("Done");
                 
                 

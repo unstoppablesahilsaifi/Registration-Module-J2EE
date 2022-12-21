@@ -31,6 +31,15 @@
                                     <input type="text" name="user_name" placeholder="Enter user name"/>
                                     <input type="password" name="user_password" placeholder="Enter user password"/>
                                     <input type="email" name="user_email" placeholder="Enter user email"/>
+                                    <div class="file-field input-field">
+                                        <div class="btn">
+                                            <span>File</span>
+                                            <input name="image" type="file">
+                                        </div>
+                                        <div class="file-path-wrapper">
+                                            <input class="file-path validate" type="text">
+                                        </div>
+                                    </div>
                                     <button type="submit" class="btn blue">Submit</button>
                                 </form>
                             </div>
@@ -96,37 +105,42 @@
         <script>
             $(document).ready(function () {
                 console.log("page is ready....")
-                $("#myform").on('submit',function(event){
+                $("#myform").on('submit', function (event) {
                     event.preventDefault();
-                    var f=$(this).serialize();
+                    //var f = $(this).serialize();
+                    // If we have imgae or something in from other than string, so serialize will not work.
+                    let f=new FormData(this);
                     console.log(f);
                     $(".loader").show();
                     $(".form").hide();
                     $.ajax({
-                        url:"Register",
-                        data:f,
-                        type:'POST',
-                        success:function(data,textStatus,jqXHR){
-                           console.log(data);
-                           console.log("Success.......");
-                             $(".loader").hide();
-                             $(".form").show();
-                             if(data.trim() === 'Done'){
-                                 $('#msg').html("Successfully Registered !!");
-                                 $('#msg').addClass('green-text')
-                             }else{
-                               $('#msg').html("Something went wrong... !!"); 
-                               $('#msg').addClass('red-text')
-                             }
-                        },
-                        error:function(jqXHR,textStatus,errorThrown){
+                        url: "Register",
+                        data: f,
+                        type: 'POST',
+                        success: function (data, textStatus, jqXHR) {
                             console.log(data);
-                           console.log("Error.......");  
-                           $(".loader").hide();
-                             $(".form").show();
-                              $('#msg').html("Something went wrong... !!"); 
+                            console.log("Success.......");
+                            $(".loader").hide();
+                            $(".form").show();
+                            if (data.trim() === 'Done') {
+                                $('#msg').html("Successfully Registered !!");
+                                $('#msg').addClass('green-text')
+                            } else {
+                                $('#msg').html("Something went wrong... !!");
                                 $('#msg').addClass('red-text')
-                        }
+                            }
+                        },
+                        error: function (jqXHR, textStatus, errorThrown) {
+                            console.log(data);
+                            console.log("Error.......");
+                            $(".loader").hide();
+                            $(".form").show();
+                            $('#msg').html("Something went wrong... !!");
+                            $('#msg').addClass('red-text')
+                        },
+                        processData:false,
+                        contentType:false
+                        
                     })
                 })
             })
