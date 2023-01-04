@@ -75,13 +75,14 @@ public class Register extends HttpServlet {
                 FileOutputStream fos = new FileOutputStream(path);
                 fos.write(data);
                 fos.close();
-              //  out.println("done");
+              // out.println("done");
 
             } catch (Exception e) {
                 e.printStackTrace();
                 out.println("Error");
             }
 
+           
         }
     }
 
