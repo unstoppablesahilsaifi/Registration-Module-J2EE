@@ -47,7 +47,7 @@ public class Register extends HttpServlet {
             Part part = request.getPart("image");
             String filename = part.getSubmittedFileName();
             //  out.println(filename);
-
+           
             //Need to Create DB connection using JDBC(because whatever data is coming that should be store in Database).
             try {
                 Thread.sleep(2000);
@@ -57,32 +57,34 @@ public class Register extends HttpServlet {
                 Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/registration_module", "root", "root");
                 //3. Query for inserting the data
                 String q = "insert into user(name,email,password,Imagename) values(?,?,?,?)";
-                PreparedStatement pstmt = con.prepareStatement(q);
+                
+                    PreparedStatement pstmt = con.prepareStatement(q);
 
-                pstmt.setString(1, name);
-                pstmt.setString(2, email);
-                pstmt.setString(3, password);
-                pstmt.setString(4, filename);
+                    pstmt.setString(1, name);
+                    pstmt.setString(2, email);
+                    pstmt.setString(3, password);
+                    pstmt.setString(4, filename);
 
-                pstmt.executeUpdate();
-                out.println("Done");
+                    pstmt.executeUpdate();
 
-                // From here the filename has been uploaded to DB but mow  we have to uplaod the  file too in project.
-                InputStream is = part.getInputStream();
-                byte []data = new byte[is.available()];
-                is.read(data);
-                String path = request.getRealPath("/") + "img" + File.separator+filename;
-                FileOutputStream fos = new FileOutputStream(path);
-                fos.write(data);
-                fos.close();
-              // out.println("done");
+                    out.println("Done");
 
+                    // From here the filename has been uploaded to DB but mow  we have to uplaod the  file too in project.
+                    InputStream is = part.getInputStream();
+                    byte[] data = new byte[is.available()];
+                    is.read(data);
+                    String path = request.getRealPath("/") + "img" + File.separator + filename;
+                    FileOutputStream fos = new FileOutputStream(path);
+                    fos.write(data);
+                    fos.close();
+             
+
+                // out.println("done");
             } catch (Exception e) {
                 e.printStackTrace();
                 out.println("Error");
             }
 
-           
         }
     }
 

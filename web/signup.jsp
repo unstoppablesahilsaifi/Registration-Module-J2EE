@@ -28,13 +28,14 @@
                             <div class="form center-align">
                                 <!--//creating form-->
                                 <form action="Register" method="post" id="myform">
-                                    <input type="text" name="user_name" placeholder="Enter user name"/>
-                                    <input type="password" name="user_password" placeholder="Enter user password"/>
-                                    <input type="email" name="user_email" placeholder="Enter user email"/>
+                                    <input type="text" name="user_name" placeholder="Enter user name" required/>
+                                      <input type="email" name="user_email" placeholder="Enter user email" required/>
+                                    <input type="password" name="user_password" placeholder="Enter user password" required/>
+                                  
                                     <div class="file-field input-field">
                                         <div class="btn">
                                             <span>File</span>
-                                            <input name="image" type="file">
+                                            <input name="image" type="file" required>
                                         </div>
                                         <div class="file-path-wrapper">
                                             <input class="file-path validate" type="text">
